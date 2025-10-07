@@ -1,16 +1,14 @@
-// Importa o módulo HTTP nativo do Node
-const http = require('http');
+const express = require('express');
+const app = express();
+app.use(express.json()); // para receber JSON no body
 
-// Cria o servidor
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
-  res.end('Olá, mundo!');
+app.get('/', (req, res) => {
+  res.send('Olá, mundo!');
 });
 
-// Define a porta (por exemplo, 3000)
-const PORT = 3000;
-
-// Inicia o servidor
-server.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+app.post('/retornar/:texto', (req, res) => {
+  const texto = req.params.texto;
+  res.send(`Você enviou: ${texto}`);
 });
+
+app.listen(3000, () => console.log('Servidor rodando em http://localhost:3000'));
